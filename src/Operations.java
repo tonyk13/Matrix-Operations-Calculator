@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Operations {
     public static void print(Matrix matrix) {
@@ -91,10 +92,10 @@ public class Operations {
             eigenvalues.addAll(quadraticSolver(1, b, c));
         } else if (matrix.getNumRows() == 3) { //finds eigenvalues for 3x3 matrix
             double a = -1;
-            double b = trace(matrix);
-            double c = .5 * (b * b - trace(squareTheMatrix(matrix)));
+            double b = Operations.trace(matrix);
+            double c = .5 * (b * b - Operations.trace(squareTheMatrix(matrix)));
             double d = determinant(matrix);
-            //now use the characteristic polynomial to solve for the eigenvaluess
+            //now use the characteristic polynomial to solve for the eigenvalues
         }
         return eigenvalues;
     }
@@ -115,21 +116,41 @@ public class Operations {
     public static double trace(Matrix matrix) {
         double tr = 0;
         for (int i = 0; i < matrix.getNumRows(); i++) {
-            System.out.println("Used in tr calc: " + matrix.matrix[i][i]);
-            tr = tr + matrix.matrix[i][i];
-            System.out.println("Current trace: " + tr);
+            tr += matrix.matrix[i][i];
         }
         return tr;
     }
 
-    public static Matrix squareTheMatrix(Matrix matrix) {
-        double[][] squared = new double[(int) matrix.getNumRows()][(int) matrix.getNumCols()];
-        for (int i = 1; i <= matrix.getNumRows(); i++) {
-            for (int j = 1; j <= matrix.getNumCols(); j++) {
-                matrix.matrix[i - 1][j - 1] *= matrix.matrix[i - 1][j - 1];
+    public static Matrix squareTheMatrix(Matrix matrix) { //fix this shit
+        Matrix squared = new Matrix(matrix.getNumRows(), matrix.getNumCols());
+        squared.matrix = squared.emptyMatrix();
+        for (int i = 0; i < matrix.getNumRows(); i++) {
+            for (int j = 0; j < matrix.getNumCols(); j++) {
+                squared.matrix[i][j] = matrix.matrix[i][j] * matrix.matrix[i][j];
             }
         }
-        return matrix;
+        return squared;
+    }
+
+    public static Matrix copyMatrix(Matrix matrix) {
+//        double[][] copy = new double[matrix.matrix.length][];
+//        for (int i = 0; i < matrix.matrix.length; i++) {
+//            double[] aMatrix = matrix.matrix[i];
+//            double aLength = aMatrix.length;
+//            copy[i] = new double[(int) aLength];
+//            System.arraycopy(aMatrix, 0, copy[i], 0, (int) aLength);
+//        }
+//        Matrix realCopy = new Matrix(copy);
+//        return realCopy;
+//        Matrix copy = new Matrix(matrix.getNumRows(), matrix.getNumCols());
+//        for (int i = 0; i < matrix.getNumRows(); i++) {
+//            for (int j = 0; j < matrix.getNumCols(); j++) {
+//                copy.matrix[i][j] = matrix.matrix[i][j];
+//            }
+//        }
+        double[][] copy = Arrays.stream(matrix.matrix).map(double[]::clone).toArray(double[][]::new);
+        Matrix copied = new Matrix(copy);
+        return copied;
     }
 
     public static ArrayList<Double> quadraticSolver(double a, double b, double c) {

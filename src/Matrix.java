@@ -10,8 +10,25 @@ public class Matrix {
         this.cols = new double[(int) cols];
     }
 
+    public Matrix(double[][] matrixSorta) { //turns a 2d array into a Matrix object
+        double[][] myInt = new double[matrixSorta.length][];
+        for(int i = 0; i < matrixSorta.length; i++) {
+            myInt[i] = matrixSorta[i].clone();
+        }
+    }
+
     public double[][] temp(double rows, double cols) { //used in Operations methods
         matrix = new double[(int) rows][(int) cols];
+        return matrix;
+    }
+
+    public double[][] emptyMatrix() { //creates a matrix filled with zeros
+        matrix = new double[(int) getNumRows()][(int) getNumCols()];
+        for (int i = 0; i < getNumRows(); i++) {
+            for (int j = 0; j < getNumCols(); j++) {
+                matrix[i][j] = 0;
+            }
+        }
         return matrix;
     }
 

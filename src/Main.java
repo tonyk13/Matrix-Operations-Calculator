@@ -54,9 +54,12 @@ public class Main {
 //        System.out.println("rref of test1");
 //        Operations.print(Operations.rref(test1));
 
-        System.out.println("Eigenvalues of test1");
-        Operations.printArraylist(Operations.eigenvalues(test1));
-        System.out.println("Trace of test1");
-        System.out.println(Operations.trace(test1));
+//        System.out.println("Eigenvalues of test1");
+//        Operations.printArraylist(Operations.eigenvalues(test1));
+//        System.out.println("Trace of test1");
+//        System.out.println(Operations.trace(test1));
+
+        Matrix copy = Operations.copyMatrix(test1);
+        copy.print();
     }
 }
