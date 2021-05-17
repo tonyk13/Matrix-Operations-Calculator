@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+/**
+ * This class represents the <code>Matrix</code> object.
+ */
 public class Matrix {
     private double[] rows;
     private double[] cols;

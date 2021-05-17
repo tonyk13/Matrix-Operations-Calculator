@@ -1,16 +1,17 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * This class contains the matrix operations.
+ */
 public class Operations {
-    public static void print(Matrix matrix) {
-        for (int i = 1; i <= matrix.getNumRows(); i++) {
-            for (int j = 1; j <= matrix.getNumCols(); j++) {
-                System.out.print("[" + matrix.matrix[i - 1][j - 1] + "]");
-            }
-            System.out.println();
-        }
-    }
-
+    /**
+     * Adds two matrices.
+     *
+     * @param a the first matrix
+     * @param b the second matrix
+     * @return The sum
+     */
     public static Matrix add(Matrix a, Matrix b) throws IncompatibleMatricesException {
         if (a.getNumRows() != b.getNumRows() && a.getNumCols() != b.getNumCols()) {
             throw new IncompatibleMatricesException();
@@ -26,6 +27,13 @@ public class Operations {
         return sum;
     }
 
+    /**
+     * Subtracts two matrices.
+     *
+     * @param a the first matrix
+     * @param b the second matrix
+     * @return The difference
+     */
     public static Matrix subtract(Matrix a, Matrix b) throws IncompatibleMatricesException {
         if (a.getNumRows() != b.getNumRows() && a.getNumCols() != b.getNumCols()) {
             throw new IncompatibleMatricesException();
@@ -41,6 +49,13 @@ public class Operations {
         return difference;
     }
 
+    /**
+     * Multiplies two matrices.
+     *
+     * @param a the first matrix
+     * @param b the second matrix
+     * @return The product
+     */
     public static Matrix multiply(Matrix a, Matrix b) {
         Matrix product = new Matrix(a.getNumRows(), b.getNumCols());
         product.temp(a.getNumRows(), b.getNumCols());
@@ -64,7 +79,13 @@ public class Operations {
         return dotProduct;
     }
 
-    public static Matrix rref(Matrix a) { //reduced row echelon form
+    /**
+     * Finds the reduced row echelon form of the matrix.
+     *
+     * @param a the matrix
+     * @return The matrix in reduced row echelon form
+     */
+    public static Matrix rref(Matrix a) {
         Matrix rref = new Matrix(a.getNumRows(), a.getNumCols());
         rref.temp(a.getNumRows(), a.getNumCols());
         for (int i = 0; i < rref.matrix.length; ++i) {
@@ -92,7 +113,13 @@ public class Operations {
         return rref;
     }
 
-    public static ArrayList<Double> eigenvalues(Matrix matrix) { //currently only works for 2x2 matrices
+    /**
+     * Finds the eigenvalues of the matrix. Currently only works for 2x2 matrices.
+     *
+     * @param matrix the matrix
+     * @return An <code>ArrayList</code> with the eigenvalues
+     */
+    public static ArrayList<Double> eigenvalues(Matrix matrix) {
         ArrayList<Double> eigenvalues = new ArrayList<>();
         if (matrix.getNumRows() == 2) { //finds eigenvalues for 2x2 matrix
             double b = -1 * (matrix.matrix[0][0] + matrix.matrix[1][1]);
@@ -108,7 +135,13 @@ public class Operations {
         return eigenvalues;
     }
 
-    public static double determinant(Matrix matrix) { //currently only works for 2x2 and 3x3 matrices
+    /**
+     * Finds the determinant of the matrix. Compatibility: r,c <= 3.
+     *
+     * @param matrix the matrix
+     * @return The determinant of the matrix
+     */
+    public static double determinant(Matrix matrix) {
         double det = 0;
         if (matrix.getNumRows() == 2) {
             det = matrix.matrix[0][0] * matrix.matrix[1][1] - matrix.matrix[0][1] * matrix.matrix[1][0];
@@ -121,6 +154,12 @@ public class Operations {
         return det;
     }
 
+    /**
+     * Finds the trace of the matrix.
+     *
+     * @param matrix the matrix
+     * @return The trace of the matrix
+     */
     public static double trace(Matrix matrix) {
         double tr = 0;
         for (int i = 0; i < matrix.getNumRows(); i++) {
@@ -129,7 +168,13 @@ public class Operations {
         return tr;
     }
 
-    public static Matrix squareTheMatrix(Matrix matrix) { //fix this shit
+    /**
+     * Squares the matrix.
+     *
+     * @param matrix the matrix
+     * @return The squared matrix
+     */
+    public static Matrix squareTheMatrix(Matrix matrix) { //fix this
         Matrix squared = new Matrix(matrix.getNumRows(), matrix.getNumCols());
         squared.matrix = squared.emptyMatrix();
         for (int i = 0; i < matrix.getNumRows(); i++) {
@@ -141,26 +186,18 @@ public class Operations {
     }
 
     public static Matrix copyMatrix(Matrix matrix) {
-//        double[][] copy = new double[matrix.matrix.length][];
-//        for (int i = 0; i < matrix.matrix.length; i++) {
-//            double[] aMatrix = matrix.matrix[i];
-//            double aLength = aMatrix.length;
-//            copy[i] = new double[(int) aLength];
-//            System.arraycopy(aMatrix, 0, copy[i], 0, (int) aLength);
-//        }
-//        Matrix realCopy = new Matrix(copy);
-//        return realCopy;
-//        Matrix copy = new Matrix(matrix.getNumRows(), matrix.getNumCols());
-//        for (int i = 0; i < matrix.getNumRows(); i++) {
-//            for (int j = 0; j < matrix.getNumCols(); j++) {
-//                copy.matrix[i][j] = matrix.matrix[i][j];
-//            }
-//        }
         double[][] copy = Arrays.stream(matrix.matrix).map(double[]::clone).toArray(double[][]::new);
-        Matrix copied = new Matrix(copy);
-        return copied;
+        return new Matrix(copy);
     }
 
+    /**
+     * Solves a quadratic equation.
+     *
+     * @param a a
+     * @param b b
+     * @param c c
+     * @return An <code>ArrayList</code> with the roots
+     */
     public static ArrayList<Double> quadraticSolver(double a, double b, double c) {
         ArrayList<Double> roots = new ArrayList<>();
         double result = b * b - 4.0 * a * c;
@@ -176,10 +213,24 @@ public class Operations {
         return roots;
     }
 
+//    /**
+//     * Solves a cubic equation. This will be my biggest achievement to date.
+//     *
+//     * @param a a
+//     * @param b b
+//     * @param c c
+//     * @param d d
+//     * @return An <code>ArrayList</code> with the roots.
+//     */
 //    public static ArrayList<Double> cubicSolver(double a, double b, double c, double d) {
 //
 //    }
 
+    /**
+     * Prints an <code>ArrayList.</code>
+     *
+     * @param ArrayList An <code>ArrayList</code>
+     */
     public static void printArraylist(ArrayList<Double> ArrayList) {
         for (Double number : ArrayList) {
             System.out.println(number);

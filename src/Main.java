@@ -1,15 +1,28 @@
-//Tony Kareeparampil presents
-//The Matrices Project
-//Current features: create, random, print, add, subtract, multiply, dot product, rref, eigenvalues of 2x2
-//Working on: eigenvalues of 3x3, third power polynomial solver(?)
-//Bugs: trace for 3x3 is fucked when attempting to find eigenvalues beforehand
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.lang.Math;
 
+/**
+ * <p>
+ * <b>The Matrices Project</b>
+ * </p>
+ *
+ * <p>
+ * <i>Current features:</i> create, random, print, add, subtract, multiply, dot product, rref, eigenvalues of 2x2
+ * </p>
+ *
+ * <p>
+ * <i>In progress:</i> eigenvalues of 3x3, cubic equation solver
+ * </p>
+ *
+ * <p>
+ * <i>Bugs:</i> trace for 3x3 does not work when attempting to find eigenvalues beforehand
+ * </p>
+ *
+ * @author Tony Kareeparampil
+ */
 public class Main {
     private static boolean quitProgram = false;
     private static String menuInput;
@@ -329,7 +342,7 @@ public class Main {
                                 } else if (matrices.get(matrixInput - 1).getNumRows() != 2 && matrices.get(matrixInput - 1).getNumCols() != 2) {
                                     throw new IncompatibleMatricesException();
                                 } else {
-                                     //find the eigenvalues
+                                    //find the eigenvalues
                                     ArrayList<Double> eigenvalues =
                                             Operations.eigenvalues(matrices.get(matrixInput - 1));
 
@@ -381,7 +394,7 @@ public class Main {
 //        if (test1.getNumRows() == test2.getNumRows() && test1.getNumCols() == test2.getNumCols()) {
 //            Operations.print(Operations.add(test1, test2));
 //        } else {
-//            System.out.println("Fuck off");
+//            System.out.println("");
 //        }
 //        System.out.println();
 //
@@ -389,7 +402,7 @@ public class Main {
 //        if (test1.getNumRows() == test2.getNumRows() && test1.getNumCols() == test2.getNumCols()) {
 //            Operations.print(Operations.subtract(test1, test2));
 //        } else {
-//            System.out.println("Fuck off");
+//            System.out.println("");
 //        }
 //        System.out.println();
 //
@@ -397,7 +410,7 @@ public class Main {
 //        if (test1.getNumCols() == test2.getNumRows()) {
 //            Operations.print(Operations.multiply(test1, test2));
 //        } else {
-//            System.out.println("Fuck off");
+//            System.out.println("");
 //        }
 //        System.out.println();
 //
