@@ -121,8 +121,7 @@ public class Main {
                                     if (secondMatrixInput < 1 || secondMatrixInput > matrices.size()) {
                                         throw new IllegalArgumentException("User entered an invalid input.");
                                     } else { //add the matrices
-                                        matrices.add(Operations.add(matrices.get(firstMatrixInput - 1),
-                                                matrices.get(secondMatrixInput - 1)));
+                                        matrices.add(matrices.get(firstMatrixInput - 1).add(matrices.get(secondMatrixInput - 1)));
                                         System.out.println("\nSum: ");
                                         matrices.get(matrices.size() - 1).print();
 
@@ -179,8 +178,7 @@ public class Main {
                                     if (secondMatrixInput < 1 || secondMatrixInput > matrices.size()) {
                                         throw new IllegalArgumentException("User entered an invalid input.");
                                     } else { //subtract the matrices
-                                        matrices.add(Operations.subtract(matrices.get(firstMatrixInput - 1),
-                                                matrices.get(secondMatrixInput - 1)));
+                                        matrices.add(matrices.get(firstMatrixInput - 1).subtract(matrices.get(secondMatrixInput - 1)));
                                         System.out.println("\nDifference: ");
                                         matrices.get(matrices.size() - 1).print();
 
@@ -237,8 +235,7 @@ public class Main {
                                     if (secondMatrixInput < 1 || secondMatrixInput > matrices.size()) {
                                         throw new IllegalArgumentException("User entered an invalid input.");
                                     } else { //multiply the matrices
-                                        matrices.add(Operations.multiply(matrices.get(firstMatrixInput - 1),
-                                                matrices.get(secondMatrixInput - 1)));
+                                        matrices.add(matrices.get(firstMatrixInput - 1).multiply(matrices.get(secondMatrixInput - 1)));
                                         System.out.println("\nProduct: "); //consume
                                         matrices.get(matrices.size() - 1).print();
 
@@ -288,8 +285,8 @@ public class Main {
                                 if (matrixInput < 1 || matrixInput > matrices.size()) {
                                     throw new IllegalArgumentException("User entered an invalid input.");
                                 } else {
-                                    matrices.add(Operations.rref(matrices.get(matrixInput - 1)));
-                                    System.out.println("\nReduced row echelon form: "); //Shoutout Lowell Jones
+                                    matrices.add(matrices.get(matrixInput - 1).rref());
+                                    System.out.println("\nReduced row echelon form: ");
                                     matrices.get(matrices.size() - 1).print();
 
                                     System.out.println("Do you want to save the reduced row echelon form of the " +
@@ -343,13 +340,9 @@ public class Main {
                                     throw new IncompatibleMatricesException();
                                 } else {
                                     //find the eigenvalues
-                                    ArrayList<Double> eigenvalues =
-                                            Operations.eigenvalues(matrices.get(matrixInput - 1));
-
+                                    ArrayList<Double> eigenvalues = matrices.get(matrixInput - 1).eigenvalues();
                                     System.out.println("\nEigenvalues: ");
-                                    for (Double eigenvalue : eigenvalues) {
-                                        System.out.println(eigenvalue);
-                                    }
+                                    Operations.printDoubleArrayList(eigenvalues);
                                 }
                             }
                         } else {
@@ -371,63 +364,6 @@ public class Main {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-
-        //
-//        int n = 3; //size of matrix
-//        System.out.println("test1");
-//        Matrix test1 = new Matrix(n, n);
-//        test1.createMatrix();
-//        System.out.println("Rows in test1: " + test1.getNumRows());
-//        System.out.println("Columns in test1: " + test1.getNumCols());
-//        test1.print();
-//        System.out.println();
-
-//        System.out.println("test2");
-//        Matrix test2 = new Matrix(4, 4);
-//        test2.randomMatrix();
-//        System.out.println("Rows in test2: " + test2.getNumRows());
-//        System.out.println("Columns in test2: " + test2.getNumCols());
-//        test2.print();
-//        System.out.println();
-//
-//        System.out.println("Sum of test1 and test2");
-//        if (test1.getNumRows() == test2.getNumRows() && test1.getNumCols() == test2.getNumCols()) {
-//            Operations.print(Operations.add(test1, test2));
-//        } else {
-//            System.out.println("");
-//        }
-//        System.out.println();
-//
-//        System.out.println("Difference of test1 and test2");
-//        if (test1.getNumRows() == test2.getNumRows() && test1.getNumCols() == test2.getNumCols()) {
-//            Operations.print(Operations.subtract(test1, test2));
-//        } else {
-//            System.out.println("");
-//        }
-//        System.out.println();
-//
-//        System.out.println("Product of test1 and test2");
-//        if (test1.getNumCols() == test2.getNumRows()) {
-//            Operations.print(Operations.multiply(test1, test2));
-//        } else {
-//            System.out.println("");
-//        }
-//        System.out.println();
-//
-//        System.out.println("Dot product of test1 and test2");
-//        System.out.println(Operations.dotProduct(test1, test2));
-//        System.out.println();
-
-//        System.out.println("rref of test1");
-//        Operations.print(Operations.rref(test1));
-
-//        System.out.println("Eigenvalues of test1");
-//        Operations.printArraylist(Operations.eigenvalues(test1));
-//        System.out.println("Trace of test1");
-//        System.out.println(Operations.trace(test1));
-//
-//        Matrix copy = Operations.copyMatrix(test1);
-//        copy.print();
     }
 
     public static void menuOptions() throws IOException {

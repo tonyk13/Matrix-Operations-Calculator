@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -114,5 +116,158 @@ public class Matrix {
             }
             System.out.println();
         }
+    }
+
+    /**
+     * Adds two matrices.
+     *
+     * @param other the other matrix
+     * @return The sum
+     */
+    public Matrix add(Matrix other) throws IncompatibleMatricesException {
+        if (this.getNumRows() != other.getNumRows() && this.getNumCols() != other.getNumCols()) {
+            throw new IncompatibleMatricesException();
+        }
+
+        Matrix sum = new Matrix(this.getNumRows(), this.getNumCols());
+        sum.temp(this.getNumRows(), this.getNumCols());
+        for (int i = 0; i < this.getNumRows(); i++) {
+            for (int j = 0; j < this.getNumCols(); j++) {
+                sum.matrix[i][j] = this.matrix[i][j] + other.matrix[i][j];
+            }
+        }
+        return sum;
+    }
+
+    /**
+     * Subtracts two matrices.
+     *
+     * @param other the other matrix
+     * @return The difference
+     */
+    public Matrix subtract(Matrix other) throws IncompatibleMatricesException {
+        if (this.getNumRows() != other.getNumRows() && this.getNumCols() != other.getNumCols()) {
+            throw new IncompatibleMatricesException();
+        }
+
+        Matrix difference = new Matrix(this.getNumRows(), this.getNumCols());
+        difference.temp(this.getNumRows(), this.getNumCols());
+        for (int i = 0; i < this.getNumRows(); i++) {
+            for (int j = 0; j < this.getNumCols(); j++) {
+                difference.matrix[i][j] = this.matrix[i][j] - other.matrix[i][j];
+            }
+        }
+        return difference;
+    }
+
+    /**
+     * Multiplies two matrices.
+     *
+     * @param other the other matrix
+     * @return The product
+     */
+    public Matrix multiply(Matrix other) {
+        Matrix product = new Matrix(this.getNumRows(), other.getNumCols());
+        product.temp(this.getNumRows(), other.getNumCols());
+        for (int i = 0; i < this.getNumRows(); i++) {
+            for (int j = 0; j < other.getNumCols(); j++) {
+                for (int k = 0; k < this.getNumCols(); k++) {
+                    product.matrix[i][j] += this.matrix[i][k] * other.matrix[k][j];
+                }
+            }
+        }
+        return product;
+    }
+
+    /**
+     * Finds the reduced row echelon form of the matrix.
+     *
+     * @return The matrix in reduced row echelon form
+     */
+    public Matrix rref() {
+        this.temp(this.getNumRows(), this.getNumCols());
+        for (double[] doubles : this.matrix) {
+            System.arraycopy(doubles, 0, doubles, 0, doubles.length);
+        }
+        for (int p = 0; p < this.matrix.length; ++p) {
+            /* Make this pivot 1 */
+            double pv = this.matrix[p][p];
+            if (pv != 0) {
+                double pvInv = 1.0 / pv;
+                for (int i = 0; i < this.matrix[p].length; ++i) {
+                    this.matrix[p][i] *= pvInv;
+                }
+            }
+            /* Make other rows zero */
+            for (int r = 0; r < this.matrix.length; ++r) {
+                if (r != p) {
+                    double f = this.matrix[r][p];
+                    for (int i = 0; i < this.matrix[r].length; ++i) {
+                        this.matrix[r][i] -= f * this.matrix[p][i];
+                    }
+                }
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Finds the eigenvalues of the matrix. Currently only works for 2x2 matrices.
+     *
+     * @return An <code>ArrayList</code> with the eigenvalues
+     */
+    public ArrayList<Double> eigenvalues() {
+        ArrayList<Double> eigenvalues = new ArrayList<>();
+        if (getNumRows() == 2) { //finds eigenvalues for 2x2 matrix
+            double b = -1 * (matrix[0][0] + matrix[1][1]);
+            double c = matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1];
+            eigenvalues.addAll(Operations.quadraticSolver(1, b, c));
+        } else if (getNumRows() == 3) { //finds eigenvalues for 3x3 matrix
+            double a = -1;
+            double b = Operations.trace(this);
+            double c = .5 * (b * b - Operations.trace(squareTheMatrix()));
+            double d = determinant();
+            //now use the characteristic polynomial to solve for the eigenvalues
+        }
+        return eigenvalues;
+    }
+
+    /**
+     * Finds the determinant of this matrix. Compatibility: r,c <= 3.
+     *
+     * @return The determinant of the matrix
+     */
+    public double determinant() {
+        double det = 0;
+        if (getNumRows() == 2) {
+            det = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+        } else if (getNumRows() == 3) {
+            double x = (matrix[1][1] * matrix[2][2]) - (matrix[2][1] * matrix[1][2]);
+            double y = (matrix[1][0] * matrix[2][2]) - (matrix[2][0] * matrix[1][2]);
+            double z = (matrix[1][0] * matrix[2][1]) - (matrix[2][0] * matrix[1][1]);
+            det = (matrix[0][0] * x) - (matrix[0][1] * y) + (matrix[0][2] * z);
+        }
+        return det;
+    }
+
+    /**
+     * Squares the matrix.
+     *
+     * @return The squared matrix
+     */
+    public Matrix squareTheMatrix() { //fix this
+        Matrix squared = new Matrix(getNumRows(), getNumCols());
+        squared.matrix = squared.emptyMatrix();
+        for (int i = 0; i < getNumRows(); i++) {
+            for (int j = 0; j < getNumCols(); j++) {
+                squared.matrix[i][j] = matrix[i][j] * matrix[i][j];
+            }
+        }
+        return squared;
+    }
+
+    public Matrix copyMatrix() {
+        double[][] copy = Arrays.stream(matrix).map(double[]::clone).toArray(double[][]::new);
+        return new Matrix(copy);
     }
 }
