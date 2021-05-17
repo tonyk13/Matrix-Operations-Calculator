@@ -18,7 +18,8 @@ import java.lang.Math;
  * </p>
  *
  * <p>
- * <i>Bugs:</i> trace for 3x3 does not work when attempting to find eigenvalues beforehand
+ * <i>Bugs:</i> trace for 3x3 does not work when attempting to find eigenvalues beforehand, "null" is printed when
+ * attempting to find eigenvalues of 3x3
  * </p>
  *
  * @author Tony Kareeparampil
