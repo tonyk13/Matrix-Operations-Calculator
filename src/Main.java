@@ -342,7 +342,11 @@ public class Main {
                                     //find the eigenvalues
                                     ArrayList<Double> eigenvalues = matrices.get(matrixInput - 1).eigenvalues();
                                     System.out.println("\nEigenvalues: ");
-                                    Operations.printDoubleArrayList(eigenvalues);
+                                    for (double value : eigenvalues) {
+                                        System.out.print("λ = ");
+                                        System.out.print(value);
+                                        System.out.println();
+                                    }
                                 }
                             }
                         } else {

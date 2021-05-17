@@ -130,10 +130,10 @@ public class Matrix {
         }
 
         Matrix sum = new Matrix(this.getNumRows(), this.getNumCols());
-        sum.temp(this.getNumRows(), this.getNumCols());
+        sum.temp(getNumRows(), getNumCols());
         for (int i = 0; i < this.getNumRows(); i++) {
             for (int j = 0; j < this.getNumCols(); j++) {
-                sum.matrix[i][j] = this.matrix[i][j] + other.matrix[i][j];
+                sum.matrix[i][j] = matrix[i][j] + other.matrix[i][j];
             }
         }
         return sum;
