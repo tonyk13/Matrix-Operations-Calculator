@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+//create an algorithm to solve cubic equation
 
 /**
  * This class contains the matrix operations.
@@ -19,7 +20,7 @@ public class Operations {
      * Finds the trace of the matrix.
      *
      * @param matrix the matrix
-     * @return The trace of the matrix
+     * @return A double representing the trace of the matrix
      */
     public static double trace(Matrix matrix) {
         double tr = 0;
@@ -64,15 +65,4 @@ public class Operations {
 //    public static ArrayList<Double> cubicSolver(double a, double b, double c, double d) {
 //
 //    }
-
-    /**
-     * Prints an <code>ArrayList.</code>
-     *
-     * @param ArrayList An <code>ArrayList</code>
-     */
-    public static void printDoubleArrayList(ArrayList<Double> ArrayList) {
-        for (Double number : ArrayList) {
-            System.out.println(number);
-        }
-    }
 }
