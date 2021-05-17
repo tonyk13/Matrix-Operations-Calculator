@@ -11,7 +11,11 @@ public class Operations {
         }
     }
 
-    public static Matrix add(Matrix a, Matrix b) {
+    public static Matrix add(Matrix a, Matrix b) throws IncompatibleMatricesException {
+        if (a.getNumRows() != b.getNumRows() && a.getNumCols() != b.getNumCols()) {
+            throw new IncompatibleMatricesException();
+        }
+
         Matrix sum = new Matrix(a.getNumRows(), a.getNumCols());
         sum.temp(a.getNumRows(), a.getNumCols());
         for (int i = 0; i < a.getNumRows(); i++) {
@@ -22,7 +26,11 @@ public class Operations {
         return sum;
     }
 
-    public static Matrix subtract(Matrix a, Matrix b) {
+    public static Matrix subtract(Matrix a, Matrix b) throws IncompatibleMatricesException {
+        if (a.getNumRows() != b.getNumRows() && a.getNumCols() != b.getNumCols()) {
+            throw new IncompatibleMatricesException();
+        }
+
         Matrix difference = new Matrix(a.getNumRows(), a.getNumCols());
         difference.temp(a.getNumRows(), a.getNumCols());
         for (int i = 0; i < a.getNumRows(); i++) {
