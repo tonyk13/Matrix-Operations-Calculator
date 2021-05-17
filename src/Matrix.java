@@ -31,6 +31,7 @@ public class Matrix {
         for (int i = 0; i < matrixSorta.length; i++) {
             myInt[i] = matrixSorta[i].clone();
         }
+        matrix = myInt;
     }
 
     /**
@@ -41,8 +42,7 @@ public class Matrix {
      * @return The temporary matrix
      */
     public double[][] temp(double rows, double cols) {
-        matrix = new double[(int) rows][(int) cols];
-        return matrix;
+        return new double[(int) rows][(int) cols];
     }
 
     /**
