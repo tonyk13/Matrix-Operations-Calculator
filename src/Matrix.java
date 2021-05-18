@@ -1,14 +1,13 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
  * This class represents the <code>Matrix</code> object.
  */
 public class Matrix {
-    private double[] rows;
-    private double[] cols;
     public double[][] matrix;
+    private final double[] rows;
+    private final double[] cols;
 
     /**
      * Constructor that creates a <code>Matrix</code> object using the number of rows and columns.
@@ -22,16 +21,71 @@ public class Matrix {
     }
 
     /**
-     * Constructor that turns a 2D array into a <code>Matrix</code> object.
+     * Function to get cofactor of matrix[p][q] in temp[][]. n is the current dimension of matrix[][].
      *
-     * @param matrixSorta a 2D array representing a matrix
+     * @param matrix the matrix used in finding the cofactor
+     * @param temp   temporary matrix
+     * @param p      represents row index
+     * @param q      represents column index
+     * @param n      matrix.length
      */
-    public Matrix(double[][] matrixSorta) {
-        double[][] myInt = new double[matrixSorta.length][];
-        for (int i = 0; i < matrixSorta.length; i++) {
-            myInt[i] = matrixSorta[i].clone();
+    static void getCofactor(double[][] matrix, double[][] temp, int p, int q, int n) {
+        int i = 0;
+        int j = 0;
+
+        // Looping for each element
+        // of the matrix
+        for (int row = 0; row < n; row++) {
+            for (int col = 0; col < n; col++) {
+                // Copying into temporary matrix
+                // only those element which are
+                // not in given row and column
+                if (row != p && col != q) {
+                    temp[i][j++] = matrix[row][col];
+                    // Row is filled, so increase
+                    // row index and reset col index
+                    if (j == n - 1) {
+                        j = 0;
+                        i++;
+                    }
+                }
+            }
         }
-        matrix = myInt;
+    }
+
+    /**
+     * Finds the determinant of this matrix.
+     *
+     * @return A <code>double</code> representing the determinant of the matrix
+     */
+    public static double determinant(double[][] matrix, int n) {
+        int N = matrix.length;
+
+        int D = 0; // Initialize result
+
+        // Base case : if matrix
+        // contains single element
+        if (n == 1)
+            return matrix[0][0];
+
+        // To store cofactors
+        double[][] temp = new double[N][N];
+
+        // To store sign multiplier
+        int sign = 1;
+
+        // Iterate for each element of first row
+        for (int f = 0; f < n; f++) {
+            // Getting Cofactor of mat[0][f]
+            getCofactor(matrix, temp, 0, f, n);
+            D += sign * matrix[0][f]
+                    * determinant(temp, n - 1);
+
+            // terms are to be added
+            // with alternate sign
+            sign = -sign;
+        }
+        return D;
     }
 
     /**
@@ -60,7 +114,7 @@ public class Matrix {
         return matrix;
     }
 
-    public double[][] createMatrix() {
+    public void createMatrix() {
         matrix = new double[(int) getNumRows()][(int) getNumCols()];
         Scanner scanner = new Scanner(System.in);  // Create a Scanner object
         for (int i = 1; i <= getNumRows(); i++) {
@@ -70,22 +124,18 @@ public class Matrix {
             }
             System.out.println();
         }
-        return matrix;
     }
 
     /**
      * Returns a 2D array that represents a random matrix created using Math.random to fill the spots.
-     *
-     * @return A random matrix
      */
-    public double[][] randomMatrix() {
+    public void randomMatrix() {
         matrix = new double[(int) getNumRows()][(int) getNumCols()];
         for (int i = 1; i <= getNumRows(); i++) {
             for (int j = 1; j <= getNumCols(); j++) {
                 matrix[i - 1][j - 1] = (int) (Math.random() * 10);
             }
         }
-        return matrix;
     }
 
     /**
@@ -125,7 +175,8 @@ public class Matrix {
      * @return The sum
      */
     public Matrix add(Matrix other) throws IncompatibleMatricesException {
-        if (this.getNumRows() != other.getNumRows() && this.getNumCols() != other.getNumCols()) {
+        if (this.getNumRows() != other.getNumRows() && this.getNumCols() != other
+                .getNumCols()) {
             throw new IncompatibleMatricesException();
         }
 
@@ -146,7 +197,8 @@ public class Matrix {
      * @return The difference
      */
     public Matrix subtract(Matrix other) throws IncompatibleMatricesException {
-        if (this.getNumRows() != other.getNumRows() && this.getNumCols() != other.getNumCols()) {
+        if (this.getNumRows() != other.getNumRows() && this.getNumCols() != other
+                .getNumCols()) {
             throw new IncompatibleMatricesException();
         }
 
@@ -224,31 +276,13 @@ public class Matrix {
             eigenvalues.addAll(Operations.quadraticSolver(1, b, c));
         } else if (getNumRows() == 3) { //finds eigenvalues for 3x3 matrix
             long trace = (long) Operations.trace(this);
-            long determinant = (long) determinant();
+            long determinant = (long) determinant(matrix, (int) getNumRows());
             long squaresTrace = (long) Operations.trace(squareTheMatrix());
 
 
             //now use the characteristic polynomial to solve for the eigenvalues
         }
         return eigenvalues;
-    }
-
-    /**
-     * Finds the determinant of this matrix. Compatibility: r,c <= 3.
-     *
-     * @return The determinant of the matrix
-     */
-    public double determinant() {
-        double det = 0;
-        if (getNumRows() == 2) {
-            det = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-        } else if (getNumRows() == 3) {
-            double x = (matrix[1][1] * matrix[2][2]) - (matrix[2][1] * matrix[1][2]);
-            double y = (matrix[1][0] * matrix[2][2]) - (matrix[2][0] * matrix[1][2]);
-            double z = (matrix[1][0] * matrix[2][1]) - (matrix[2][0] * matrix[1][1]);
-            det = (matrix[0][0] * x) - (matrix[0][1] * y) + (matrix[0][2] * z);
-        }
-        return det;
     }
 
     /**
@@ -265,10 +299,5 @@ public class Matrix {
             }
         }
         return squared;
-    }
-
-    public Matrix copyMatrix() {
-        double[][] copy = Arrays.stream(matrix).map(double[]::clone).toArray(double[][]::new);
-        return new Matrix(copy);
     }
 }

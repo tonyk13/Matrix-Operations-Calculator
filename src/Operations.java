@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-//create an algorithm to solve cubic equation
+//Solve cubic equation
 
 /**
  * This class contains the matrix operations.
