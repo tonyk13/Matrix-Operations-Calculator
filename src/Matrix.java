@@ -151,10 +151,10 @@ public class Matrix {
         }
 
         Matrix difference = new Matrix(this.getNumRows(), this.getNumCols());
-        difference.temp(this.getNumRows(), this.getNumCols());
+        double[][] temp = difference.temp(this.getNumRows(), this.getNumCols());
         for (int i = 0; i < this.getNumRows(); i++) {
             for (int j = 0; j < this.getNumCols(); j++) {
-                difference.matrix[i][j] = this.matrix[i][j] - other.matrix[i][j];
+                temp[i][j] = this.matrix[i][j] - other.matrix[i][j];
             }
         }
         return difference;
@@ -223,10 +223,11 @@ public class Matrix {
             double c = matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1];
             eigenvalues.addAll(Operations.quadraticSolver(1, b, c));
         } else if (getNumRows() == 3) { //finds eigenvalues for 3x3 matrix
-            double a = -1;
-            double b = Operations.trace(this);
-            double c = .5 * (b * b - Operations.trace(squareTheMatrix()));
-            double d = determinant();
+            long trace = (long) Operations.trace(this);
+            long determinant = (long) determinant();
+            long squaresTrace = (long) Operations.trace(squareTheMatrix());
+
+
             //now use the characteristic polynomial to solve for the eigenvalues
         }
         return eigenvalues;

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 //create an algorithm to solve cubic equation
 
 /**
@@ -53,16 +52,56 @@ public class Operations {
         return roots;
     }
 
-//    /**
-//     * Solves a cubic equation. This will be my biggest achievement to date.
-//     *
-//     * @param a a
-//     * @param b b
-//     * @param c c
-//     * @param d d
-//     * @return An <code>ArrayList</code> with the roots.
-//     */
-//    public static ArrayList<Double> cubicSolver(double a, double b, double c, double d) {
-//
-//    }
+    /**
+     * Solves a cubic equation. This will be my biggest achievement to date.
+     *
+     * @param A first coefficient
+     * @param B second coefficient
+     * @param C third coefficient
+     * @param D fourth coefficient
+     * @return An <code>ArrayList</code> with the roots.
+     */
+    public static ArrayList<Long> cubicSolver(long A, long B, long C, long D, long E) {
+        ArrayList<Long> solution = new ArrayList<>();
+
+        // Initialise start and end
+        long start = 0, end = 100000;
+
+        long mid, ans;
+
+        // Implement Binary Search
+        while (start <= end) {
+            // Find mid
+            mid = start + (end - start) / 2;
+
+            // Find the value of f(x) using
+            // current mid
+            ans = check(A, B, C, D, mid);
+
+            // Check if current mid satisfy
+            // the equation
+            if (ans == E) {
+                // Print mid and add to arraylist of solution
+                System.out.println(mid);
+                solution.add(mid);
+            }
+
+            if (ans < E) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+        return solution;
+    }
+
+    static long check(long A, long B, long C, long D, long x) {
+        long ans;
+
+        // Find the value equation at x
+        ans = (A * x * x * x + B * x * x + C * x + D);
+
+        // Return the value of ans
+        return ans;
+    }
 }

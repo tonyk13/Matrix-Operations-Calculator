@@ -19,7 +19,7 @@ import java.lang.Math;
  *
  * <p>
  * <i>Bugs:</i> trace for 3x3 does not work when attempting to find eigenvalues beforehand, "null" is printed when
- * attempting to find eigenvalues of 3x3
+ * attempting to find eigenvalues of 3x3, addition doesn't work, subtraction doesn't work
  * </p>
  *
  * @author Tony Kareeparampil
@@ -50,9 +50,10 @@ public class Main {
                         if (matrixSizeInput == 1 || matrixSizeInput == 2 || matrixSizeInput == 3) {
                             matrices.add(new Matrix(matrixSizeInput, matrixSizeInput));
                             matrices.get(matrices.size() - 1).createMatrix();
+                            System.out.println("\nCustom matrix created!\n");
                             matrices.get(matrices.size() - 1).print();
                         } else {
-                            throw new IllegalArgumentException("User entered an invalid input.");
+                            throw new IllegalArgumentException("User entered an invalid option.");
                         }
                     } else if (menuInput.equalsIgnoreCase("2")) {
                         //Create a random matrix
@@ -68,11 +69,10 @@ public class Main {
                         if (matrixSizeInput == 1 || matrixSizeInput == 2 || matrixSizeInput == 3) {
                             matrices.add(new Matrix(matrixSizeInput, matrixSizeInput));
                             matrices.get(matrices.size() - 1).randomMatrix();
-                            System.out.println();
-                            System.out.println("Random matrix created!\n");
+                            System.out.println("\nRandom matrix created!\n");
                             matrices.get(matrices.size() - 1).print();
                         } else {
-                            throw new IllegalArgumentException("User entered an invalid input.");
+                            throw new IllegalArgumentException("User entered an invalid option.");
                         }
                     } else if (menuInput.equalsIgnoreCase("3")) {
                         //Print all matrices
@@ -113,14 +113,14 @@ public class Main {
                                         Integer.parseInt(new BufferedReader(new InputStreamReader(System.in)).readLine());
 
                                 if (firstMatrixInput < 1 || firstMatrixInput > matrices.size()) {
-                                    throw new IllegalArgumentException("User entered an invalid input.");
+                                    throw new IllegalArgumentException("Matrix doesn't exist.");
                                 } else {
                                     System.out.println("\nSelect second matrix: ");
                                     int secondMatrixInput =
                                             Integer.parseInt(new BufferedReader(new InputStreamReader(System.in)).readLine());
 
                                     if (secondMatrixInput < 1 || secondMatrixInput > matrices.size()) {
-                                        throw new IllegalArgumentException("User entered an invalid input.");
+                                        throw new IllegalArgumentException("Matrix doesn't exist.");
                                     } else { //add the matrices
                                         matrices.add(matrices.get(firstMatrixInput - 1).add(matrices.get(secondMatrixInput - 1)));
                                         System.out.println("\nSum: ");
@@ -140,16 +140,16 @@ public class Main {
                                         } else if (saveSumInput == 2) {
                                             matrices.remove(matrices.size() - 1);
                                         } else if (saveSumInput == 3) {
-                                            int cock = (int) (Math.random() * 2) + 1;
+                                            int randomInt = (int) (Math.random() * 2) + 1;
 
-                                            if (cock == 1) {
+                                            if (randomInt == 1) {
                                                 System.out.println("Sum saved!");
                                                 return;
-                                            } else if (cock == 2) {
+                                            } else if (randomInt == 2) {
                                                 matrices.remove(matrices.size() - 1);
                                             }
                                         } else {
-                                            throw new IllegalArgumentException("User entered an invalid input.");
+                                            throw new IllegalArgumentException("User entered an invalid option.");
                                         }
                                     }
                                 }
@@ -170,14 +170,14 @@ public class Main {
                                         Integer.parseInt(new BufferedReader(new InputStreamReader(System.in)).readLine());
 
                                 if (firstMatrixInput < 1 || firstMatrixInput > matrices.size()) {
-                                    throw new IllegalArgumentException("User entered an invalid input.");
+                                    throw new IllegalArgumentException("Matrix doesn't exist.");
                                 } else {
                                     System.out.println("\nSelect second matrix: ");
                                     int secondMatrixInput =
                                             Integer.parseInt(new BufferedReader(new InputStreamReader(System.in)).readLine());
 
                                     if (secondMatrixInput < 1 || secondMatrixInput > matrices.size()) {
-                                        throw new IllegalArgumentException("User entered an invalid input.");
+                                        throw new IllegalArgumentException("Matrix doesn't exist.");
                                     } else { //subtract the matrices
                                         matrices.add(matrices.get(firstMatrixInput - 1).subtract(matrices.get(secondMatrixInput - 1)));
                                         System.out.println("\nDifference: ");
@@ -206,7 +206,7 @@ public class Main {
                                                 matrices.remove(matrices.size() - 1);
                                             }
                                         } else {
-                                            throw new IllegalArgumentException("User entered an invalid input.");
+                                            throw new IllegalArgumentException("User entered an invalid option.");
                                         }
                                     }
                                 }
@@ -227,14 +227,14 @@ public class Main {
                                         Integer.parseInt(new BufferedReader(new InputStreamReader(System.in)).readLine());
 
                                 if (firstMatrixInput < 1 || firstMatrixInput > matrices.size()) {
-                                    throw new IllegalArgumentException("User entered an invalid input.");
+                                    throw new IllegalArgumentException("Matrix doesn't exist.");
                                 } else {
                                     System.out.println("\nSelect second matrix: ");
                                     int secondMatrixInput =
                                             Integer.parseInt(new BufferedReader(new InputStreamReader(System.in)).readLine());
 
                                     if (secondMatrixInput < 1 || secondMatrixInput > matrices.size()) {
-                                        throw new IllegalArgumentException("User entered an invalid input.");
+                                        throw new IllegalArgumentException("Matrix doesn't exist.");
                                     } else { //multiply the matrices
                                         matrices.add(matrices.get(firstMatrixInput - 1).multiply(matrices.get(secondMatrixInput - 1)));
                                         System.out.println("\nProduct: "); //consume
@@ -263,7 +263,7 @@ public class Main {
                                                 matrices.remove(matrices.size() - 1);
                                             }
                                         } else {
-                                            throw new IllegalArgumentException("User entered an invalid input.");
+                                            throw new IllegalArgumentException("User entered an invalid option.");
                                         }
                                     }
                                 }
@@ -284,7 +284,7 @@ public class Main {
                                         Integer.parseInt(new BufferedReader(new InputStreamReader(System.in)).readLine());
 
                                 if (matrixInput < 1 || matrixInput > matrices.size()) {
-                                    throw new IllegalArgumentException("User entered an invalid input.");
+                                    throw new IllegalArgumentException("Matrix doesn't exist.");
                                 } else {
                                     matrices.add(matrices.get(matrixInput - 1).rref());
                                     System.out.println("\nReduced row echelon form: ");
@@ -314,7 +314,7 @@ public class Main {
                                             matrices.remove(matrices.size() - 1);
                                         }
                                     } else {
-                                        throw new IllegalArgumentException("User entered an invalid input.");
+                                        throw new IllegalArgumentException("User entered an invalid option.");
                                     }
                                 }
                             }
@@ -336,7 +336,7 @@ public class Main {
                                         Integer.parseInt(new BufferedReader(new InputStreamReader(System.in)).readLine());
 
                                 if (matrixInput < 1 || matrixInput > matrices.size()) {
-                                    throw new IllegalArgumentException("User entered an invalid input.");
+                                    throw new IllegalArgumentException("Matrix doesn't exist.");
                                 } else if (matrices.get(matrixInput - 1).getNumRows() != 2 && matrices.get(matrixInput - 1).getNumCols() != 2) {
                                     throw new IncompatibleMatricesException();
                                 } else {
@@ -351,7 +351,7 @@ public class Main {
                                 }
                             }
                         } else {
-                            throw new IllegalArgumentException("User entered an invalid input.");
+                            throw new IllegalArgumentException("User entered an invalid option.");
                         }
                     } else if (menuInput.equalsIgnoreCase("5")) {
                         //Quit program
@@ -360,7 +360,7 @@ public class Main {
                         System.out.println("\nProgram terminating normally.");
                         quitProgram = true;
                     } else {
-                        throw new IllegalArgumentException("User entered an invalid input.");
+                        throw new IllegalArgumentException("User entered an invalid option.");
                     }
                 } catch (IllegalArgumentException | NoMatricesException | IncompatibleMatricesException e) {
                     System.out.println(e.getMessage());
