@@ -6,8 +6,8 @@ import java.util.Scanner;
  */
 public class Matrix {
     public double[][] matrix;
-    private final double[] rows;
-    private final double[] cols;
+    private final double rows;
+    private final double cols;
 
     /**
      * Constructor that creates a <code>Matrix</code> object using the number of rows and columns.
@@ -16,8 +16,8 @@ public class Matrix {
      * @param cols the number of columns of the matrix
      */
     public Matrix(double rows, double cols) {
-        this.rows = new double[(int) rows];
-        this.cols = new double[(int) cols];
+        this.rows = rows;
+        this.cols = cols;
     }
 
     /**
@@ -35,7 +35,7 @@ public class Matrix {
 
         // Looping for each element
         // of the matrix
-        for (int row = 0; row < n; row++) {
+        for (int row = 0; row < matrix.length; row++) {
             for (int col = 0; col < n; col++) {
                 // Copying into temporary matrix
                 // only those element which are
@@ -59,33 +59,32 @@ public class Matrix {
      * @return A <code>double</code> representing the determinant of the matrix
      */
     public static double determinant(double[][] matrix, int n) {
-        int N = matrix.length;
-
-        int D = 0; // Initialize result
+        int result = 0; // Initialize result
 
         // Base case : if matrix
         // contains single element
-        if (n == 1)
+        if (n == 1) {
             return matrix[0][0];
+        }
 
         // To store cofactors
-        double[][] temp = new double[N][N];
+        double[][] temp = new double[matrix.length][matrix.length];
 
         // To store sign multiplier
         int sign = 1;
 
         // Iterate for each element of first row
-        for (int f = 0; f < n; f++) {
+        for (int i = 0; i < n; i++) {
             // Getting Cofactor of mat[0][f]
-            getCofactor(matrix, temp, 0, f, n);
-            D += sign * matrix[0][f]
+            getCofactor(matrix, temp, 0, i, n);
+            result += sign * matrix[0][i]
                     * determinant(temp, n - 1);
 
             // terms are to be added
             // with alternate sign
             sign = -sign;
         }
-        return D;
+        return result;
     }
 
     /**
@@ -124,10 +123,12 @@ public class Matrix {
             }
             System.out.println();
         }
+        scanner.close();
     }
 
     /**
-     * Returns a 2D array that represents a random matrix created using Math.random to fill the spots.
+     * Creates a 2D array that represents a random matrix created using Math
+     * .random to fill the spots.
      */
     public void randomMatrix() {
         matrix = new double[(int) getNumRows()][(int) getNumCols()];
@@ -144,7 +145,7 @@ public class Matrix {
      * @return The number of rows
      */
     public double getNumRows() {
-        return this.rows.length;
+        return this.rows;
     }
 
     /**
@@ -153,7 +154,7 @@ public class Matrix {
      * @return The number of columns
      */
     public double getNumCols() {
-        return this.cols.length;
+        return this.cols;
     }
 
     /**
