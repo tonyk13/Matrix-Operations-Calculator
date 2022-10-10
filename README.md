@@ -1,3 +1,3 @@
 Tony Kareeparampil  
-The Matrices Project  
-Matrix operations and linear algebra
+Matrix Operations Calculator
+Applies linear algebra concepts for very fast/non-trivial implementations of matrix computations.
